@@ -7,5 +7,6 @@ namespace PhoneStore.Models
 {
     public class TestPhone
     {
+        //Comment
     }
 }
