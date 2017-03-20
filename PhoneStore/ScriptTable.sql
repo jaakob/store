@@ -36,7 +36,7 @@ CREATE TABLE Users
  IsActive bit NOT NULL
 )
 
-CREATE TABLE Phone
+CREATE TABLE Phones
 (
   PhoneId int NOT NULL IDENTITY
   PRIMARY KEY,
