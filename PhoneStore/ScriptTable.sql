@@ -54,6 +54,6 @@ ID int NOT NULL IDENTITY
 PRIMARY KEY,
 [Image] nvarchar(300) NOT NULL,
 PhoneId int NOT NULL
-CONSTRAINT FK_Image_Phone FOREIGN KEY (PhoneId) REFERENCES Phone(PhoneId)
+CONSTRAINT FK_Image_Phone FOREIGN KEY (PhoneId) REFERENCES Phones(PhoneId)
 )
 GO
