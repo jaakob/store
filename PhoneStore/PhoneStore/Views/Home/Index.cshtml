@@ -1,18 +1,37 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <h3 style="text-align:center">Create a New Account</h3>
+        <form>
+            <div class="form-group">                
+                <div class="col-xs-6">                    
+                    <input class="form-control" id="Name" type="text" placeholder="First Name"/>
+                </div>
+                <div class="col-xs-6">                    
+                    <input class="form-control" id="Surname" type="text" placeholder="Last Name"/>
+                    <br />
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-12">                
+                <input class="form-control" id="Email" type="text"  placeholder="Email"/>
+                <br />
+            </div>
+            <div class="col-xs-12">                
+                <input class="form-control" id="Password" type="password" placeholder="Password" />
+            </div>
+            <div class="col-xs-12">
+                <br />
+                <button type="button" class="btn btn-success">Register</button>
+            </div>
+</form>
+</div>
+    
+    <div class="col-sm-4"></div>
+</div>
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
-        Hello guys!
-    </div>
-</body>
-</html>
