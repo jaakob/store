@@ -32,7 +32,6 @@ CREATE TABLE Users
  [Password] nvarchar(15) NOT NULL,
  Email nvarchar(25) NOT NULL,
  ContactPhone nvarchar(15) NULL,
- Cookies nvarchar(80) NOT NULL,
  IsActive bit NOT NULL
 )
 
