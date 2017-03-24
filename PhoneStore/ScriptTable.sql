@@ -31,6 +31,7 @@ CREATE TABLE Users
  LastName nvarchar(30) NOT NULL,
  [Password] nvarchar(15) NOT NULL,
  Email nvarchar(25) NOT NULL,
+ Cookie nvarchar(80) NOT NULL,
  ContactPhone nvarchar(15) NULL,
  IsActive bit NOT NULL
 )
