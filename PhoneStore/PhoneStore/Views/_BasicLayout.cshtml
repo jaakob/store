@@ -1,0 +1,16 @@
+﻿@using PhoneStore.BL.Auth
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <br />
+    <div>
+        @RenderBody()
+
+        <div>@Html.ActionLink("Выйти", "LogOff", "Account") </div>
+    </div>
+</body>
+</html>

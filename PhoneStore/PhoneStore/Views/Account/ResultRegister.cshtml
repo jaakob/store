@@ -1,0 +1,19 @@
+﻿@model PhoneStore.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ResultRegister</title>
+</head>
+<body>
+    <div> 
+        <p>Спасибо за регистрацию, @Model.FirstName! </p>
+        <p>@Html.ActionLink("На главную", "Login", "Account")</p>
+    </div>
+</body>
+</html>

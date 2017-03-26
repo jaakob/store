@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace PhoneStore.Models
+namespace PhoneStore
 {
-    public class TestPhone
+    public static class Constants
     {
+        public const string NameCookie = "auth";
     }
 }

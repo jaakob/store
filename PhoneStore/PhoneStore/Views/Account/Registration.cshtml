@@ -1,0 +1,28 @@
+﻿@model PhoneStore.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+</head>
+<body>
+    <div> 
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <p>Имя: @Html.EditorFor(e => e.FirstName) </p>
+            <p>Фамилия: @Html.EditorFor(e => e.LastName) </p>
+            <p>Пароль: @Html.PasswordFor(e => e.Password) </p>
+            <p>Повторите пароль: @Html.PasswordFor(e => e.ConfirmPassword) </p>
+            <p>E-mail: @Html.EditorFor(e => e.Email) </p>
+            <p>Телефон: @Html.EditorFor(e => e.ContactPhone) </p>
+            <input type="submit" value="Регистрация" />
+        }
+    </div>
+</body>
+</html>
