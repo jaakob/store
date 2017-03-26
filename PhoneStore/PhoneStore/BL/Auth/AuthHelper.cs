@@ -12,8 +12,6 @@ namespace PhoneStore.BL.Auth
 {
     public static class AuthHelper
     {
-        private static byte[] bytesResultHash;
-
         public static void LogInUser(HttpContextBase context, User user, string value)
         {
             if (value == null)
