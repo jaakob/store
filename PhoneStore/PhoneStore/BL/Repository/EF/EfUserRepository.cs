@@ -30,7 +30,7 @@ namespace PhoneStore.BL.Repository.EF
         {
             using (PhoneStoreContext context = new PhoneStoreContext())
             {
-                return context.Users.FirstOrDefault(e => e.Email != user.Email) == null ;
+                return context.Users.SingleOrDefault(e => e.Email == user.Email) == null ;
             }
         }
 

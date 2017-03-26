@@ -51,8 +51,7 @@ namespace PhoneStore.BL.Service
         {
             UserEntity userEtity = new UserEntity();
             userEtity = (UserEntity)userEtity.FromApplicationModel(user);
-
-            return userEtity == null;
+            return userRepository.IsAlreadyRegister(userEtity);
         }
     }
 }
