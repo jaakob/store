@@ -1,0 +1,27 @@
+﻿@model PhoneStore.Models.Login
+@{
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div> 
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <p>E-mail: @Html.EditorFor(e => e.Email) </p>
+            <p>Пароль: @Html.PasswordFor(e => e.Password) </p>
+            <input type="submit" value="Войти" />
+        }
+        <br />
+        <button onclick="location.href='@Url.Action("Registration", "Account")'">Регистрация</button>
+    </div>
+</body>
+
+</html>
