@@ -3,16 +3,43 @@
     Layout = null;
 }
 
+@model PhoneStore.Models.UserApp
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Authorization Page</title>
 </head>
 <body>
-    <div> 
-        Hello guys!
+
+    <div>
+        <p><H2>Authorization</H2></p>
+        <table>
+
+             @using (Html.BeginForm("Authorization", "Authorization", FormMethod.Post))
+             {
+            <tr>
+                <td>Login:</td>
+                <td><input type="text" name="Email" required placeholder="Введите E-Mail или Логин" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="Password" required placeholder="Введите пароль" /></td>
+            </tr>
+            
+            <tr>    
+                
+                <td><input type="submit" value="Войти" /></td>
+           </tr>
+                }  
+
+
+        </table>
     </div>
+            @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+            {
+
+            <input type="submit" value="Зарегестрироваться" />
+            }
 </body>
 </html>

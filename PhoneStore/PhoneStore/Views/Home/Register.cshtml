@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+
+<!DOCTYPE html>
+
+@model PhoneStore.Models.UserApp
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @using (Html.BeginForm("Success", "Home", FormMethod.Post))
+    {
+        <div>
+            <p><H2>Create a New Account</H2></p>
+            <table>
+                <tr>
+                    <td>First Name:</td>
+                    <td><input type="text" , name="FirstName" required placeholder="Введите имя" /></td>
+                    <td>Last Name:</td>
+                    <td><input type="text" , name="LastName" required placeholder="Введите Фамилию" /></td>
+                </tr>
+                <tr>
+                    <td>E-Mail:</td>
+                    <td><input type="text" , name="Email" required placeholder="Введите E-Mail" /></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" , name="Password" required placeholder="Введите пароль" /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Register" /></td>
+
+
+                </tr>
+            </table>
+        </div>
+    }
+
+    @using (Html.BeginForm("Authorization", "Home", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td><input type="submit" value="Authorization" /></td>
+            </tr>
+        </table>
+    }
+
+</body>
+</html>
+
+

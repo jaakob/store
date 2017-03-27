@@ -4,7 +4,7 @@ CREATE DATABASE PhoneStore
 ON
 (
 NAME = 'PhoneStore',
-FILENAME = 'D:\Base\PhoneStore.mdf',
+FILENAME = 'F:\Мои документы\Work C#\Project\store\PhoneStore\PhoneStore.mdf',
 SIZE = 10MB,
 MAXSIZE = 200MB,
 FILEGROWTH = 5MB
@@ -12,7 +12,7 @@ FILEGROWTH = 5MB
 LOG ON
 (
 NAME = 'PhoneStoreLog',
-FILENAME = 'D:\Base\PhoneStore.ldf',
+FILENAME = 'F:\Мои документы\Work C#\Project\store\PhoneStore\PhoneStore.ldf',
 SIZE = 10MB,
 MAXSIZE = 200MB,
 FILEGROWTH = 5MB
