@@ -47,6 +47,13 @@ namespace PhoneStore.BL.Service
             userRepository.UpdateCookies(userEntity, cookie);
         }
 
+        public void MakeActive(User user)
+        {
+            UserEntity userEntity = new UserEntity();
+            userEntity = (UserEntity)userEntity.FromApplicationModel(user);
+            userRepository.MakeActive(userEntity);
+        }
+
         public bool IsAlreadyRegister(User user)
         {
             UserEntity userEtity = new UserEntity();

@@ -57,5 +57,21 @@ namespace PhoneStore.BL.Repository.EF
                 }
             }
         }
+
+        public void MakeActive(UserEntity user)
+        {
+            if (user != null)
+            {
+                using (PhoneStoreContext context = new PhoneStoreContext())
+                {
+                    UserEntity userResult = context.Users.SingleOrDefault(e => e.Cookie == user.Cookie);
+                    if (userResult != null)
+                    {
+                        userResult.IsActive = true;
+                        context.SaveChanges();
+                    }
+                }
+            }
+        }
     }
 }

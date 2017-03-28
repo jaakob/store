@@ -7,6 +7,8 @@ using PhoneStore.Models;
 using PhoneStore.BL.Service;
 using PhoneStore.BL.Repository.EF;
 using PhoneStore.BL.Auth;
+using System.Threading.Tasks;
+
 
 namespace PhoneStore.Controllers
 {
@@ -18,10 +20,15 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-             if (!AuthHelper.IsAuthenticated(HttpContext))
-                 return View();
-
-            return RedirectToAction("Ads", "Home");
+            if (AuthHelper.IsAuthenticated(HttpContext))
+            {
+                User user = manager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
+                if (user.IsActive)
+                {
+                    return RedirectToAction("Ads", "Home");
+                }
+            }
+            return View();
         }
 
         [HttpPost]
@@ -33,8 +40,15 @@ namespace PhoneStore.Controllers
 
                 if (currentUser != null)
                 {
-                    AuthHelper.LogInUser(HttpContext, currentUser, Guid.NewGuid().ToString());
-                    return RedirectToAction("Ads", "Home");
+                    if (currentUser.IsActive == true)
+                    {
+                        AuthHelper.LogInUser(HttpContext, currentUser, Guid.NewGuid().ToString());
+                        return RedirectToAction("Ads", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Данный Email не авторизован. Пожалуйста, пройдите по полученной ссылке");
+                    }
                 }
                 else
                     ModelState.AddModelError("", "Неверный логин или пароль");
@@ -52,11 +66,19 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
+            if (AuthHelper.IsAuthenticated(HttpContext))
+            {
+                User user = manager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
+                if (user.IsActive)
+                {
+                    return RedirectToAction("Ads", "Home");
+                }
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Registration(User user)
+        public async Task<ActionResult> Registration(User user)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +88,8 @@ namespace PhoneStore.Controllers
                     user.Cookie = Guid.NewGuid().ToString();
                     user.IsActive = false;
                     manager.Add(user);
-                    return RedirectToAction("ResultRegister", user);
+                    await EmailService.SendEmailAsync(user.Email, user.Cookie);
+                    return RedirectToAction("ResultRegister");
                 }
                 else
                     ModelState.AddModelError("", "Пользователь с таким e-mail уже существует");
@@ -75,9 +98,9 @@ namespace PhoneStore.Controllers
         }
 
         [HttpGet]
-        public ViewResult ResultRegister(User user)
+        public ViewResult ResultRegister()
         {
-            return View(user);
+            return View();
         }
     }
 }

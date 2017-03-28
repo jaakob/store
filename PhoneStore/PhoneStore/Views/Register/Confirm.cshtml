@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Ads";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+<p>@ViewBag.Status</p>
+@if (@ViewBag.Status == "success")
+{
+    <h4>Ваш аккаунт успешно зарегистрирован!</h4>
+    <p>@Html.ActionLink("На главную", "Login", "Account")</p>
+}
+else if (@ViewBag.Status == "alreadyActive")
+{
+    <h4>Ваш аккаунт уже был успешно активирован! Пожалуйста, войдите на сайт.</h4>    
+    <p>@Html.ActionLink("На главную", "Login", "Account")</p>
+}
+else
+{
+    <h4>Введенная Вами регистрационная ссылка неправильная.</h4>
+    <p>@Html.ActionLink("На главную", "Login", "Account")</p>
+}
+

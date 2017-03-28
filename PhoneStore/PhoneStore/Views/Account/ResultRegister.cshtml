@@ -1,5 +1,4 @@
-﻿@model PhoneStore.Models.User
-@{
+﻿@{
     Layout = null;
 }
 
@@ -12,7 +11,8 @@
 </head>
 <body>
     <div> 
-        <p>Спасибо за регистрацию, @Model.FirstName! </p>
+        <p>Спасибо за регистрацию! </p>
+        <p>На Вашу электронную почту отправлена ссылка. Пожалуйста, пройдите по ней для завершения регистрации.</p>
         <p>@Html.ActionLink("На главную", "Login", "Account")</p>
     </div>
 </body>

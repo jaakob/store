@@ -20,7 +20,11 @@ namespace PhoneStore.Controllers
             if (AuthHelper.IsAuthenticated(HttpContext))
             {
                 User user = manager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
-                return View(user);
+                if (user.IsActive)
+                {
+                    return View(user);
+                }                
+                return RedirectToAction("Login", "Account");
             }
             else
                 return RedirectToAction("Login", "Account");

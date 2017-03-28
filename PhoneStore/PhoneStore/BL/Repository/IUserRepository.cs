@@ -14,6 +14,7 @@ namespace PhoneStore.BL.Repository
         T GetUser(Login login);
         T GetUserByCookies(string cookie);
         void UpdateCookies(T user, string cookie);
+        void MakeActive(T user);
         bool IsAlreadyRegister(T user);
     }
 }
