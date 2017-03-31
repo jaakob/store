@@ -1,0 +1,30 @@
+﻿@model IEnumerable<PhoneStore.Models.Phone>
+
+<h2>Частичное представление PhonesSearch</h2>
+<h3>Информация о телефонах:</h3>
+<div>
+    @if (Model != null)
+    {
+        foreach (var phone in Model)
+        {
+        <p>Телефон: @phone.Brand @phone.Model</p>
+        <p>Цена: @phone.Price</p>
+        <p>Описание: @phone.Description</p>
+
+            if (@phone.Images != null)
+            {
+            <p>Фото:</p>
+            <table>
+                <tr>
+                    @foreach (string i in @phone.Images)
+                    {
+                        <td>
+                            <img src="~/Images/@i" alt="@i" style="width:auto;height:256px;" />
+                        </td>
+                    }
+                </tr>
+            </table>
+            }
+        }
+    }
+</div>

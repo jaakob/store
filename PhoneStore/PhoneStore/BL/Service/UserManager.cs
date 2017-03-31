@@ -56,9 +56,20 @@ namespace PhoneStore.BL.Service
 
         public bool IsAlreadyRegister(User user)
         {
-            UserEntity userEtity = new UserEntity();
-            userEtity = (UserEntity)userEtity.FromApplicationModel(user);
-            return userRepository.IsAlreadyRegister(userEtity);
+            UserEntity userEntity = new UserEntity();
+            userEntity = (UserEntity)userEntity.FromApplicationModel(user);
+            return userRepository.IsAlreadyRegister(userEntity);
+        }
+
+        public int GetUserId(User user)
+        {
+            if (user != null)
+            {
+                UserEntity userEntity = new UserEntity();
+                userEntity = (UserEntity)userEntity.FromApplicationModel(user);
+                return userEntity.UserId;
+            }
+            return 0;
         }
     }
 }

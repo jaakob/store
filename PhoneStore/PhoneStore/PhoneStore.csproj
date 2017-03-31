@@ -168,13 +168,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BL\Auth\AuthHelper.cs" />
+    <Compile Include="BL\Repository\EF\EfImageRepository.cs" />
+    <Compile Include="BL\Repository\EF\EfPhoneRepository.cs" />
     <Compile Include="BL\Repository\EF\EfUserRepository.cs" />
+    <Compile Include="BL\Repository\IImageRepository.cs" />
+    <Compile Include="BL\Repository\IPhoneRepository.cs" />
     <Compile Include="BL\Repository\IUserRepository.cs" />
     <Compile Include="BL\Service\EmailService.cs" />
     <Compile Include="BL\Service\IStorageModel.cs" />
+    <Compile Include="BL\Service\PhoneManager.cs" />
     <Compile Include="BL\Service\UserManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="DAL\EF\ImageEntity.cs">
@@ -205,7 +211,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IApplicationModel.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -222,6 +230,9 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\_BasicLayout.cshtml" />
     <Content Include="Views\Register\Confirm.cshtml" />
+    <Content Include="Views\Home\PhonesSearch.cshtml" />
+    <Content Include="Views\Ads\AddingPage.cshtml" />
+    <Content Include="Views\Ads\AddingResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -231,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -11,13 +11,39 @@ namespace PhoneStore.DAL.EF
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class ImageEntity
+    using PhoneStore.Models;
+    using PhoneStore.BL.Service;
+
+    public partial class ImageEntity : IStorageModel<Image>
     {
         public int ID { get; set; }
         public string Image { get; set; }
         public int PhoneId { get; set; }
-    
+
         public virtual PhoneEntity Phones { get; set; }
+
+        public Image ConvertToApplicationModel()
+        {
+            Image image = new Image()
+            {
+                ID = this.ID,
+                ImageURL = this.Image,
+                PhoneId = this.PhoneId
+            };
+            return image;
+        }
+
+        public IStorageModel<Image> FromApplicationModel(Image model)
+        {
+            if (model == null)
+                return null;
+            ImageEntity imageEntity = new ImageEntity()
+            {
+                ID = model.ID,
+                Image = model.ImageURL,
+                PhoneId = model.PhoneId                
+            };
+            return imageEntity;
+        }
     }
 }

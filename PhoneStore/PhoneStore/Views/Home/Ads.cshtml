@@ -1,4 +1,7 @@
 ﻿@model PhoneStore.Models.User
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 @{
     ViewBag.Title = "Ads";
     Layout = "~/Views/_BasicLayout.cshtml";
@@ -6,3 +9,37 @@
 
 <h4> Добро пожаловать, @Model.FirstName</h4>
 
+<div id="results">    
+    @Html.Action("GetPhones", "Home")
+    <br />
+</div>
+<br/>
+<div>
+    @using (Ajax.BeginForm("PhonesSearch", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <input type="text" name="id" />
+        <input type="submit" value="Поиск" />
+    }
+</div>
+<p>Форма добавления телефона:</p>
+<div>
+@using (Html.BeginForm("AddingPhone","Ads", FormMethod.Post))
+{
+    <!--
+    Html.ValidationSummary()
+    <p>Производитель: Html.EditorFor(e => e.Brand) </p>
+    <p>Модель: Html.EditorFor(e => e.Model) </p>
+    <p>Цена: Html.EditorFor(e => e.Price)</p>
+    <p>Описание: Html.TextBoxFor(e => e.Description)</p>
+        -->
+    <input type="submit" value="Сохранить" />
+        
+}
+<h3>Выберите файл для загрузки</h3>
+    uploadresult: @ViewBag.UploadResult
+    @using (Html.BeginForm("Upload", "Ads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="upload" /><br />
+        <input type="submit" value="Загрузить" />
+    }
+</div>
