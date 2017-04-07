@@ -9,10 +9,15 @@ using PhoneStore.BL.Repository;
 
 namespace PhoneStore.BL.Service
 {
-    public class UserManager
+    public class UserManager : IUserManager
     {
-        EfUserRepository userRepository = new EfUserRepository(); // fix
+        private IUserRepository<UserEntity> userRepository; 
 
+        public UserManager(IUserRepository<UserEntity> userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+        
         public void Add(User user)
         {
             UserEntity userEntity = new UserEntity();
@@ -65,11 +70,9 @@ namespace PhoneStore.BL.Service
         {
             if (user != null)
             {
-                UserEntity userEntity = new UserEntity();
-                userEntity = (UserEntity)userEntity.FromApplicationModel(user);
-                return userEntity.UserId;
+                return userRepository.GetUserByCookies(user.Cookie).UserId;
             }
-            return 0;
+            return 0;            
         }
     }
 }

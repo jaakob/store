@@ -1,2 +1,9 @@
-﻿<p>SMILE</p>
-<a href="~/Views/Home/Ads.cshtml">
+﻿@{
+    ViewBag.Title = "Add Result";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+
+
+<h3>Телефон добавлен!</h3>
+<img src="~/Images/smile.png" style="width:auto;height:512px;"/>
+<p>@Html.ActionLink("На главную", "Login", "Account")</p>

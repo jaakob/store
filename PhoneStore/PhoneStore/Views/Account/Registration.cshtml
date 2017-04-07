@@ -1,28 +1,28 @@
 ﻿@model PhoneStore.Models.User
 @{
-    Layout = null;
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/_BasicLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Registration</title>
-</head>
-<body>
-    <div> 
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary()
-            <p>Имя: @Html.EditorFor(e => e.FirstName) </p>
-            <p>Фамилия: @Html.EditorFor(e => e.LastName) </p>
-            <p>Пароль: @Html.PasswordFor(e => e.Password) </p>
-            <p>Повторите пароль: @Html.PasswordFor(e => e.ConfirmPassword) </p>
-            <p>E-mail: @Html.EditorFor(e => e.Email) </p>
-            <p>Телефон: @Html.EditorFor(e => e.ContactPhone) </p>
-            <input type="submit" value="Регистрация" />
-        }
+<div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <div>
+            @using (Html.BeginForm())
+            {
+                <strong>@Html.ValidationSummary()</strong>
+                <p>Имя: @Html.EditorFor(e => e.FirstName) </p>
+                <p>Фамилия: @Html.EditorFor(e => e.LastName) </p>
+                <p>Пароль: @Html.PasswordFor(e => e.Password) </p>
+                <p>Повторите пароль: @Html.PasswordFor(e => e.ConfirmPassword) </p>
+                <p>E-mail: @Html.EditorFor(e => e.Email) </p>
+                <p>Телефон: @Html.EditorFor(e => e.ContactPhone) </p>                
+                <button class="btn btn-success" type="submit">Регистрация</button>
+            }
+        </div>
     </div>
-</body>
-</html>
+<div class="col-sm-4"></div>
+</div>
+
+
+

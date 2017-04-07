@@ -1,11 +1,27 @@
 ﻿@model PhoneStore.Models.Phone
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
-@using (Html.BeginForm())
+@{
+    ViewBag.Title = "Add Phone";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+
+<div>
+@using (Html.BeginForm("AddingConfirmation", "Ads", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary()
     <p>Производитель: @Html.EditorFor(e => e.Brand) </p>
     <p>Модель: @Html.EditorFor(e => e.Model) </p>
     <p>Цена: @Html.EditorFor(e => e.Price)</p>
-    <p>Описание: @Html.TextBoxFor(e => e.Description)</p>
+    <p>Описание: @Html.TextAreaFor(e => e.Description)</p>
+    <p>Фото: </p>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+
     <input type="submit" value="Сохранить" />
 }
+</div>

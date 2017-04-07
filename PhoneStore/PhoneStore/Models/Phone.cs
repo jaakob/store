@@ -20,7 +20,8 @@ namespace PhoneStore.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Укажите цену")]
-        [RegularExpression(@"^\d+\.\d{0,2}$", ErrorMessage = "Неправильная цена")]
+        //[RegularExpression(@"^\d{0,5}\.{0,1}\d{1,2}$", ErrorMessage = "Неправильная цена")]
+        [RegularExpression(@"^\d+.\d{0,2}$", ErrorMessage = "Неправильная цена")]
         [Range(0, 99999.99, ErrorMessage = "Цена не может быть меньше нуля и больше 100000")]        
         public decimal Price { get; set; }
 

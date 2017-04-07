@@ -1,30 +1,51 @@
-﻿@model IEnumerable<PhoneStore.Models.Phone>
+﻿@model PagedList.IPagedList<PhoneStore.Models.Phone>
+@using PagedList.Mvc
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<!--IEnumerable<PhoneStore.Models.Phone>-->
 
-<h2>Частичное представление PhonesSearch</h2>
-<h3>Информация о телефонах:</h3>
-<div>
+<div id="res">
+    <h3>Информация о телефонах:</h3>
     @if (Model != null)
     {
         foreach (var phone in Model)
         {
-        <p>Телефон: @phone.Brand @phone.Model</p>
-        <p>Цена: @phone.Price</p>
-        <p>Описание: @phone.Description</p>
+            <div>
+                <p><strong>Телефон:</strong> @phone.Brand @phone.Model</p>
+                <p><strong>Цена:</strong> @phone.Price</p>
+                <p><strong>Описание:</strong> @phone.Description</p>
 
-            if (@phone.Images != null)
-            {
-            <p>Фото:</p>
-            <table>
-                <tr>
-                    @foreach (string i in @phone.Images)
-                    {
-                        <td>
-                            <img src="~/Images/@i" alt="@i" style="width:auto;height:256px;" />
-                        </td>
-                    }
-                </tr>
-            </table>
-            }
+               @if (phone.Images != null)
+                {
+                <br/>
+                <table>
+                    <tr>
+                        @foreach (string i in @phone.Images)
+                        {
+                            <td>
+                                <img src="~/Images/@i" alt="@i" style="width:auto;height:256px;" />
+                            </td>
+                        }
+                    </tr>
+                </table>
+                }
+            </div>
+            <br/>
         }
     }
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+    @if (ViewBag.Page == "Search")
+    {
+        @Html.PagedListPager(Model, page => Url.Action("PhonesSearch", new { page }),
+         PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "res" })
+         )
+    }
+    else
+    {
+    @Html.PagedListPager(Model, page => Url.Action("GetPhones", new { page }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "res" })
+            )
+    }
 </div>
+<br/>
+

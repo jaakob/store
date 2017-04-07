@@ -1,4 +1,4 @@
-﻿@model PhoneStore.Models.User
+﻿@model PhoneStore.Models.Phone
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
@@ -6,40 +6,36 @@
     ViewBag.Title = "Ads";
     Layout = "~/Views/_BasicLayout.cshtml";
 }
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <h3>Поиск телефонов:</h3>
+        <div>
+            @using (Ajax.BeginForm("PhonesSearch", new AjaxOptions { UpdateTargetId = "results" }))
+            {
+                <input type="text" name="searchString" />
+                <button class="btn btn-primary" type="submit">Поиск</button>
+            }
+        </div>
+        <div id="results">
+            @Html.Action("GetPhones", "Home")
+        </div>
 
-<h4> Добро пожаловать, @Model.FirstName</h4>
+        <h3>Добавить телефон:</h3>
+        @using (Ajax.BeginForm("AddingPhone", "Ads", new AjaxOptions { UpdateTargetId = "add" }))
+        {
+            <div id="add">
+                @Html.ValidationSummary()
+                <p>Производитель: @Html.EditorFor(e => e.Brand) </p>
+                <p>Модель: @Html.EditorFor(e => e.Model) </p>
+                <p>Цена: @Html.EditorFor(e => e.Price)</p>
+                <p>Описание: @Html.TextAreaFor(e => e.Description)</p>                
+                <button class="btn btn-primary" type="submit">Добавить</button>
+                
+            </div>
+        }
+    </div>
+    <div class="col-sm-2"></div>
+    </div>
 
-<div id="results">    
-    @Html.Action("GetPhones", "Home")
-    <br />
-</div>
-<br/>
-<div>
-    @using (Ajax.BeginForm("PhonesSearch", new AjaxOptions { UpdateTargetId = "results" }))
-    {
-        <input type="text" name="id" />
-        <input type="submit" value="Поиск" />
-    }
-</div>
-<p>Форма добавления телефона:</p>
-<div>
-@using (Html.BeginForm("AddingPhone","Ads", FormMethod.Post))
-{
-    <!--
-    Html.ValidationSummary()
-    <p>Производитель: Html.EditorFor(e => e.Brand) </p>
-    <p>Модель: Html.EditorFor(e => e.Model) </p>
-    <p>Цена: Html.EditorFor(e => e.Price)</p>
-    <p>Описание: Html.TextBoxFor(e => e.Description)</p>
-        -->
-    <input type="submit" value="Сохранить" />
-        
-}
-<h3>Выберите файл для загрузки</h3>
-    uploadresult: @ViewBag.UploadResult
-    @using (Html.BeginForm("Upload", "Ads", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <input type="file" name="upload" /><br />
-        <input type="submit" value="Загрузить" />
-    }
-</div>
+
