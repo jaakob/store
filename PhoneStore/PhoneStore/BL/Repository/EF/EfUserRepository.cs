@@ -4,29 +4,33 @@ using System.Linq;
 using System.Web;
 using PhoneStore.DAL.EF;
 using PhoneStore.Models;
+using System.Data.Entity.Validation;
 
 namespace PhoneStore.BL.Repository.EF
 {
-    public class EfUserRepository : IUserRepository<UserEntity>
+    public class EfUserRepository : IUserRepository
     {
-        public void Add(UserEntity user)
+        public void Add(User user)
         {
             using (PhoneStoreContext context = new PhoneStoreContext())
             {
-                context.Users.Add(user);
-                context.SaveChanges();
+                UserEntity userEntity = (UserEntity)new UserEntity().FromApplicationModel(user);
+                context.Users.Add(userEntity);
+                    context.SaveChanges();
             }
         }
 
-        public UserEntity GetUser(Login login)
+        public User GetUser(Login login)
         {
             using (PhoneStoreContext context = new PhoneStoreContext())
             {
-                return context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == login.Password);
+                UserEntity userEntity = context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == login.Password);
+
+                return userEntity != null ? userEntity.ConvertToApplicationModel() : null;
             }
         }
 
-        public bool IsAlreadyRegister (UserEntity user)
+        public bool IsAlreadyRegister (User user)
         {
             using (PhoneStoreContext context = new PhoneStoreContext())
             {
@@ -34,26 +38,38 @@ namespace PhoneStore.BL.Repository.EF
             }
         }
 
-        public UserEntity GetUserByCookies(string cookie)
+        public User GetUserByCookies(string cookie)
         {
             using (PhoneStoreContext context = new PhoneStoreContext())
             {
-                return context.Users.FirstOrDefault(e => e.Cookie == cookie);
+                UserEntity userEntity = context.Users.FirstOrDefault(e => e.Cookie == cookie);
+
+                return userEntity != null ? userEntity.ConvertToApplicationModel() : null;
             }
         }
 
-        public void UpdateCookies(UserEntity user, string cookie)
+        public void UpdateIsActive(User user, bool value)
         {
-            if (user != null)
+            using (PhoneStoreContext context = new PhoneStoreContext())
             {
-                using (PhoneStoreContext context = new PhoneStoreContext())
+                UserEntity userResult = context.Users.SingleOrDefault(e => e.Cookie == user.Cookie);
+                if (userResult != null)
                 {
-                    UserEntity userResult = context.Users.SingleOrDefault(e => e.Cookie == user.Cookie);
-                    if (userResult != null)
-                    {
-                        userResult.Cookie = cookie;
-                        context.SaveChanges();
-                    }
+                    userResult.IsActive = value;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateCookies(User user, string cookie)
+        {
+            using (PhoneStoreContext context = new PhoneStoreContext())
+            {
+                UserEntity userResult = context.Users.SingleOrDefault(e => e.Cookie == user.Cookie);
+                if (userResult != null)
+                {
+                    userResult.Cookie = cookie;
+                    context.SaveChanges();
                 }
             }
         }

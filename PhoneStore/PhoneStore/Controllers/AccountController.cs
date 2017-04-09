@@ -7,18 +7,30 @@ using PhoneStore.Models;
 using PhoneStore.BL.Service;
 using PhoneStore.BL.Repository.EF;
 using PhoneStore.BL.Auth;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using PhoneStore.BL.Email;
+using PhoneStore.Security;
 
 namespace PhoneStore.Controllers
 {
     public class AccountController : Controller
-    {        
-        private UserManager manager = new UserManager();
+    {
+        private IUserManager manager;
+        private AuthHelper authHelper;
+
+
+        public AccountController(IUserManager manager)
+        {
+            this.manager = manager;
+            authHelper = new AuthHelper(manager);
+        }
 
         // GET: Home
         [HttpGet]
         public ActionResult Login()
         {
-             if (!AuthHelper.IsAuthenticated(HttpContext))
+             if (!authHelper.IsAuthenticated(HttpContext))
                  return View();
 
             return RedirectToAction("Ads", "Home");
@@ -29,23 +41,29 @@ namespace PhoneStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                login.Password = SecurityHelper.GetHashSha256(login.Password);
                 User currentUser = manager.GetUser(login);
 
                 if (currentUser != null)
                 {
-                    AuthHelper.LogInUser(HttpContext, currentUser, Guid.NewGuid().ToString());
-                    return RedirectToAction("Ads", "Home");
+                    if (currentUser.IsActive == true)
+                    {
+                        authHelper.UserSetCookie(HttpContext, currentUser, Guid.NewGuid().ToString());
+                        return RedirectToAction("Ads", "Home");
+                    }
+                    else
+                        ModelState.AddModelError("", "Подтвердите регистрацию по email");
                 }
                 else
                     ModelState.AddModelError("", "Неверный логин или пароль");
             }
-                return View();
+            return View();
         }
-        
+
         [HttpGet]
         public ActionResult LogOff()
         {
-            AuthHelper.LogOffUser(HttpContext);
+            authHelper.LogOffUser(HttpContext);
             return RedirectToAction("Login");
         }
 
@@ -56,7 +74,8 @@ namespace PhoneStore.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registration(User user)
+        [AllowAnonymous]
+        public async Task<ActionResult> Registration(User user)
         {
             if (ModelState.IsValid)
             {
@@ -65,19 +84,43 @@ namespace PhoneStore.Controllers
                     user.RegDate = DateTime.Now;
                     user.Cookie = Guid.NewGuid().ToString();
                     user.IsActive = false;
+                    user.Password = SecurityHelper.GetHashSha256(user.Password);
                     manager.Add(user);
-                    return RedirectToAction("ResultRegister", user);
+                    try
+                    {
+                        await EmailHelper.SendMail(user);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+
+                    return RedirectToAction("ResultRegister");
                 }
                 else
                     ModelState.AddModelError("", "Пользователь с таким e-mail уже существует");
             }
-              return View();
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string token)
+        {
+            User currentUser = manager.GetUserByCookies(token);
+
+            if (currentUser != null)
+            {
+                currentUser.IsActive = true;
+                manager.UpdateIsActive(currentUser);
+                return RedirectToAction("Login");
+            }
+            return View();
         }
 
         [HttpGet]
-        public ViewResult ResultRegister(User user)
+        public ActionResult ResultRegister()
         {
-            return View(user);
+            return View();
         }
     }
 }

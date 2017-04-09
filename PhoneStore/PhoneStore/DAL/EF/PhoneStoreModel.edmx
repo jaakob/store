@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PhoneStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PhoneStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Images">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ImageId" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Image" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="PhoneId" Type="int" Nullable="false" />
         </EntityType>
@@ -18,9 +18,9 @@
             <PropertyRef Name="PhoneId" />
           </Key>
           <Property Name="PhoneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Model" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="45" Nullable="false" />
           <Property Name="Brand" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
         </EntityType>
@@ -32,9 +32,9 @@
           <Property Name="RegDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Cookie" Type="nvarchar" MaxLength="80" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="ContactPhone" Type="nvarchar" MaxLength="15" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -75,33 +75,10 @@
             <End Role="Phones" EntitySet="Phones" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PhoneStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ImageEntity">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Image" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Phones" Relationship="Self.FK_Image_Phone" FromRole="Images" ToRole="Phones" />
-        </EntityType>
-        <EntityType Name="PhoneEntity">
-          <Key>
-            <PropertyRef Name="PhoneId" />
-          </Key>
-          <Property Name="PhoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Model" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Brand" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Images" Relationship="Self.FK_Image_Phone" FromRole="Phones" ToRole="Images" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Phone_User" FromRole="Phones" ToRole="Users" />
-        </EntityType>
         <EntityType Name="UserEntity">
           <Key>
             <PropertyRef Name="UserId" />
@@ -110,16 +87,51 @@
           <Property Name="RegDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Cookie" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ContactPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Phones" Relationship="Self.FK_Phone_User" FromRole="Users" ToRole="Phones" />
+          <NavigationProperty Name="Phones" Relationship="PhoneStoreModel.FK_Phone_User" FromRole="UserEntity" ToRole="Phones" />
+        </EntityType>
+        <EntityContainer Name="PhoneStoreContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="PhoneStoreModel.UserEntity" />
+          <EntitySet Name="Images" EntityType="PhoneStoreModel.ImageEntity" />
+          <EntitySet Name="Phones" EntityType="PhoneStoreModel.PhoneEntity" />
+          <AssociationSet Name="FK_Image_Phone" Association="PhoneStoreModel.FK_Image_Phone">
+            <End Role="Phones" EntitySet="Phones" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phone_User" Association="PhoneStoreModel.FK_Phone_User">
+            <End Role="UserEntity" EntitySet="Users" />
+            <End Role="Phones" EntitySet="Phones" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ImageEntity">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Phones" Relationship="PhoneStoreModel.FK_Image_Phone" FromRole="Images" ToRole="Phones" />
+        </EntityType>
+        <EntityType Name="PhoneEntity">
+          <Key>
+            <PropertyRef Name="PhoneId" />
+          </Key>
+          <Property Name="PhoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Images" Relationship="PhoneStoreModel.FK_Image_Phone" FromRole="Phones" ToRole="Images" />
+          <NavigationProperty Name="Users" Relationship="PhoneStoreModel.FK_Phone_User" FromRole="Phones" ToRole="UserEntity" />
         </EntityType>
         <Association Name="FK_Image_Phone">
-          <End Role="Phones" Type="PhoneStoreModel.PhoneEntity" Multiplicity="1" />
-          <End Role="Images" Type="PhoneStoreModel.ImageEntity" Multiplicity="*" />
+          <End Type="PhoneStoreModel.PhoneEntity" Role="Phones" Multiplicity="1" />
+          <End Type="PhoneStoreModel.ImageEntity" Role="Images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Phones">
               <PropertyRef Name="PhoneId" />
@@ -130,10 +142,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Phone_User">
-          <End Role="Users" Type="PhoneStoreModel.UserEntity" Multiplicity="1" />
-          <End Role="Phones" Type="PhoneStoreModel.PhoneEntity" Multiplicity="*" />
+          <End Type="PhoneStoreModel.UserEntity" Role="UserEntity" Multiplicity="1" />
+          <End Type="PhoneStoreModel.PhoneEntity" Role="Phones" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="UserEntity">
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="Phones">
@@ -141,46 +153,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PhoneStoreContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Images" EntityType="PhoneStoreModel.ImageEntity" />
-          <EntitySet Name="Phones" EntityType="PhoneStoreModel.PhoneEntity" />
-          <EntitySet Name="Users" EntityType="PhoneStoreModel.UserEntity" />
-          <AssociationSet Name="FK_Image_Phone" Association="Self.FK_Image_Phone">
-            <End Role="Phones" EntitySet="Phones" />
-            <End Role="Images" EntitySet="Images" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Phone_User" Association="Self.FK_Phone_User">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Phones" EntitySet="Phones" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PhoneStoreModelStoreContainer" CdmEntityContainer="PhoneStoreContext">
-          <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="PhoneStoreModel.ImageEntity">
-              <MappingFragment StoreEntitySet="Images">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Phones">
-            <EntityTypeMapping TypeName="PhoneStoreModel.PhoneEntity">
-              <MappingFragment StoreEntitySet="Phones">
-                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="Brand" ColumnName="Brand" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PhoneStoreModel.UserEntity">
               <MappingFragment StoreEntitySet="Users">
@@ -193,6 +171,27 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="PhoneStoreModel.ImageEntity">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phones">
+            <EntityTypeMapping TypeName="PhoneStoreModel.PhoneEntity">
+              <MappingFragment StoreEntitySet="Phones">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="PhoneId" ColumnName="PhoneId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

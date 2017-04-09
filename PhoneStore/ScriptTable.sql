@@ -29,8 +29,8 @@ CREATE TABLE Users
  RegDate datetime2(7) NOT NULL,
  FirstName nvarchar(30) NOT NULL,
  LastName nvarchar(30) NOT NULL,
- [Password] nvarchar(15) NOT NULL,
- Email nvarchar(25) NOT NULL,
+ [Password] nvarchar(max) NOT NULL,
+ Email nvarchar(256) NOT NULL,
  Cookie nvarchar(80) NOT NULL,
  ContactPhone nvarchar(15) NULL,
  IsActive bit NOT NULL
@@ -40,9 +40,9 @@ CREATE TABLE Phones
 (
   PhoneId int NOT NULL IDENTITY
   PRIMARY KEY,
-  Model nvarchar(15) NOT NULL,
+  Model nvarchar(45) NOT NULL,
   Brand nvarchar(15) NOT NULL,
-  [Description] nvarchar(100) NOT NULL,
+  [Description] nvarchar(250) NOT NULL,
   Price decimal NOT NULL,
   UserId int NOT NULL,
   CONSTRAINT FK_Phone_User FOREIGN KEY (UserId) REFERENCES Users(UserId)

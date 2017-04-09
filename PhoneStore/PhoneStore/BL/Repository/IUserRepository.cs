@@ -8,12 +8,13 @@ using PhoneStore.BL.Service;
 
 namespace PhoneStore.BL.Repository
 {
-    public interface IUserRepository<T>
+    public interface IUserRepository
     {
-        void Add(T user);
-        T GetUser(Login login);
-        T GetUserByCookies(string cookie);
-        void UpdateCookies(T user, string cookie);
-        bool IsAlreadyRegister(T user);
+        void Add(User user);
+        User GetUser(Login login);
+        User GetUserByCookies(string cookie);
+        void UpdateCookies(User user, string cookie);
+        bool IsAlreadyRegister(User user);
+        void UpdateIsActive(User user, bool value);
     }
 }

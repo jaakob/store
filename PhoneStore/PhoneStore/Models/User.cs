@@ -8,6 +8,8 @@ namespace PhoneStore.Models
 {
     public class User : IApplicationModel
     {
+        public int UserId { get; set; }
+
         [Required(ErrorMessage = "Имя обязательно для заполнения")]
         public string FirstName { get; set; }
 
@@ -24,7 +26,7 @@ namespace PhoneStore.Models
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Почта обязательная для заполнения")]
-        [StringLength(25, MinimumLength = 5, ErrorMessage = "Электронный адрес не менее 5 и не более 25 символов")]
+        [StringLength(25, MinimumLength = 5, ErrorMessage = "Электронный адрес не менее 5 и не более 256 символов")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
