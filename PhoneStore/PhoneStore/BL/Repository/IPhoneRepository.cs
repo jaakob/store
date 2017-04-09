@@ -11,5 +11,9 @@ namespace PhoneStore.BL.Repository
     {
         T GetPhone(int id);
         void Add(T phone);
+        int GetPhoneId(T phone);
+        IEnumerable<T> GetPhones();
+        List<T> GetPhones(int fromId, int toId);
+        List<T> FindPhones(string searchString);
     }
 }

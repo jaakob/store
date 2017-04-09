@@ -4,9 +4,9 @@
 {
 @Html.ValidationSummary()
 <p>Производитель: @Html.EditorFor(e => e.Brand) </p>
-<p>Модель: @Html.EditorFor(e => e.Model) </p>
-<p>Цена: @Html.EditorFor(e => e.Price)</p>
-<p>Описание: @Html.TextAreaFor(e => e.Description)</p>
+<p>Модель:        @Html.EditorFor(e => e.Model) </p>
+<p>Цена:          @Html.EditorFor(e => e.Price)</p>
+<p>Описание:      @Html.TextAreaFor(e => e.Description)</p>
 
-<input type="submit" value="Добавить" />
+<button class="btn btn-primary" type="submit">Добавить</button>
 }

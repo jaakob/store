@@ -13,8 +13,15 @@ using System.Threading.Tasks;
 namespace PhoneStore.Controllers
 {
     public class AccountController : Controller
-    {        
-        private UserManager manager = new UserManager();
+    {
+        private IUserManager userManager;
+        private AuthHelper authHelper;
+
+        public AccountController(IUserManager userManager)
+        {
+            this.userManager = userManager;
+            this.authHelper = new AuthHelper(userManager);
+        }
 
         // GET: Home
         [HttpGet]
@@ -22,11 +29,7 @@ namespace PhoneStore.Controllers
         {
             if (AuthHelper.IsAuthenticated(HttpContext))
             {
-                User user = manager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
-                if (user.IsActive)
-                {
-                    return RedirectToAction("Ads", "Home");
-                }
+                 return RedirectToAction("Ads", "Home");
             }
             return View();
         }
@@ -36,7 +39,7 @@ namespace PhoneStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                User currentUser = manager.GetUser(login);
+                User currentUser = userManager.GetUser(login);
 
                 if (currentUser != null)
                 {
@@ -68,11 +71,7 @@ namespace PhoneStore.Controllers
         {
             if (AuthHelper.IsAuthenticated(HttpContext))
             {
-                User user = manager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
-                if (user.IsActive)
-                {
-                    return RedirectToAction("Ads", "Home");
-                }
+                return RedirectToAction("Ads", "Home");
             }
             return View();
         }
@@ -82,13 +81,15 @@ namespace PhoneStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (manager.IsAlreadyRegister(user))
+                if (userManager.IsAlreadyRegister(user))
                 {
+                    ViewBag.Message = null;
                     user.RegDate = DateTime.Now;
                     user.Cookie = Guid.NewGuid().ToString();
                     user.IsActive = false;
-                    manager.Add(user);
-                    await EmailService.SendEmailAsync(user.Email, user.Cookie);
+                    userManager.Add(user);
+                    await EmailService.SendEmailAsync(user); 
+                                          
                     return RedirectToAction("ResultRegister");
                 }
                 else
@@ -101,6 +102,36 @@ namespace PhoneStore.Controllers
         public ViewResult ResultRegister()
         {
             return View();
+        }
+
+        public ActionResult Confirm(string id)
+        {
+            ViewBag.Status = "";
+            if (AuthHelper.IsAuthenticated(HttpContext))
+            {
+                User user = userManager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
+                return RedirectToAction("Ads", "Home");
+            }
+            User currentUser = userManager.GetUserByCookies(id);
+            if (currentUser == null)
+            {
+                return View();
+            }
+            if (currentUser != null)
+            {
+                if (currentUser.IsActive == false)
+                {
+                    userManager.MakeActive(currentUser);
+                    ViewBag.Status = "success";
+                    return View();
+                }
+                if (currentUser.IsActive == true)
+                {
+                    ViewBag.Status = "alreadyActive";
+                    return View();
+                }
+            }
+            return View("Login", "Account");
         }
     }
 }

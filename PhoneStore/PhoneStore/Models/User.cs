@@ -11,7 +11,7 @@ namespace PhoneStore.Models
         [Required(ErrorMessage = "Имя обязательно для заполнения")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Фамилия обязательно для заполнения")]
+        [Required(ErrorMessage = "Фамилия обязательна для заполнения")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Пароль обязателен для заполнения")]

@@ -7,7 +7,7 @@ using PhoneStore.Models;
 
 namespace PhoneStore.BL.Repository.EF
 {
-    public class EfImageRepository
+    public class EfImageRepository : IImageRepository<ImageEntity>
     {
         public ImageEntity GetImage(int id)
         {

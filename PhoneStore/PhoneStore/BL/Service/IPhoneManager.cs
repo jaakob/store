@@ -12,5 +12,6 @@ namespace PhoneStore.BL.Service
         void AddImage(Image image);
         List<string> GetImagesForPhone(Phone phone);
         List<Phone> GetPhones(int from, int to);
+        List<Phone> GetPhones();
     }
 }

@@ -6,48 +6,59 @@ using System.Web.Mvc;
 using PhoneStore.BL.Auth;
 using PhoneStore.Models;
 using PhoneStore.BL.Service;
+using PagedList.Mvc;
+using PagedList;
 
 
 namespace PhoneStore.Controllers
 {
     public class HomeController : Controller
     {
-        UserManager manager = new UserManager();//fix
-        PhoneManager phoneManager = new PhoneManager();//fix
+        private IPhoneManager phoneManager;        
+        private IUserManager userManager;
+        private AuthHelper authHelper;
+        private static string search = ""; 
+
+        public HomeController(IPhoneManager phoneManager, IUserManager userManager)
+        {
+            this.phoneManager = phoneManager;
+            this.userManager = userManager;
+            this.authHelper = new AuthHelper(userManager);
+        }
 
         // GET: Ads
         public ActionResult Ads()
         {
             if (AuthHelper.IsAuthenticated(HttpContext))
             {
-                User user = manager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
-                if (user.IsActive)
-                { 
-                    ViewBag.UploadResult = TempData["UploadResult"];                    
-                    return View(user);
-                }                
-                return RedirectToAction("Login", "Account");
+                //User user = userManager.GetUserByCookies(HttpContext.Request.Cookies[Constants.NameCookie].Value);
+                //return View(user);
+                return View();
             }            
             return RedirectToAction("Login", "Account");
         }
-
-        //test mode
-        [HttpPost]
-        public ActionResult PhonesSearch(int id)
+        
+        [HttpPost]        
+        public ActionResult PhonesSearch(string searchString, int? page)
         {
-            var phones = phoneManager.GetPhones(id, id);            
-            if (phones == null)
+            if (searchString != null)
             {
-                return HttpNotFound();
-            }
-            return PartialView(phones);
+                search = searchString;
+            }            
+            int pageSize = 5;
+            var phones = phoneManager.FindPhones(search);
+            int pageNumber = (page ?? 1);
+            ViewBag.Page = "Search";
+            return PartialView(phones.ToPagedList(pageNumber, pageSize));
+        } 
+
+        public PartialViewResult GetPhones(int? page)
+        {
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);            
+            List<Phone> phones = phoneManager.GetPhones();
+            return PartialView("~/Views/Home/PhonesSearch.cshtml", phones.ToPagedList(pageNumber, pageSize));
         }
 
-        [ChildActionOnly]
-        public PartialViewResult GetPhones()
-        {                       
-            List<Phone> phones = phoneManager.GetPhones(1, 5);
-            return PartialView("~/Views/Home/PhonesSearch.cshtml", phones);
-        }
     }
 }

@@ -39,15 +39,22 @@ namespace PhoneStore.DAL.EF
         {
             Phone phone = new Phone()
             {
-                PhoneId = this.PhoneId,                
+                PhoneId = this.PhoneId,
                 Model = this.Model,
                 Brand = this.Brand,
                 Description = this.Description,
                 Price = this.Price,
                 UserId = this.UserId,
-                //Images = (HashSet<Image>)this.Images // ???
-            };
-            return phone;
+                Images = new List<string>()
+            }; 
+            if (this.Images != null)
+            {
+                foreach (ImageEntity i in this.Images)
+                {
+                    phone.Images.Add(i.Image);
+                }
+            }
+        return phone;
         }
 
         public IStorageModel<Phone> FromApplicationModel(Phone model)

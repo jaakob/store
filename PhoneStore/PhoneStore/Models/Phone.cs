@@ -26,7 +26,7 @@ namespace PhoneStore.Models
         public decimal Price { get; set; }
 
         public int UserId { get; set; }
-        public List<string> Images { get; set; }
+        public List<string> Images { get; set; }        
 
     }
 }

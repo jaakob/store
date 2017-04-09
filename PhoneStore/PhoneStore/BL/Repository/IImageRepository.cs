@@ -3,7 +3,7 @@ using PhoneStore.Models;
 
 namespace PhoneStore.BL.Repository
 {
-    interface IImageRepository<T>
+    public interface IImageRepository<T>
     {
         T GetImage(int id);
         List<T> GetImagesForPhone(Phone phone);

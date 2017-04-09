@@ -4,14 +4,23 @@ using System.Linq;
 using System.Web;
 using PhoneStore.Models;
 using PhoneStore.BL.Service;
+using PhoneStore.BL.Repository.EF;
+using PhoneStore.DAL.EF;
 using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace PhoneStore.BL.Auth
 {
-    public static class AuthHelper
+    public sealed class AuthHelper
     {
+        private static IUserManager manager; //= new UserManager(new EfUserRepository());
+
+        public AuthHelper(IUserManager imanager)
+        {
+            manager = imanager;
+        }
+
         public static void LogInUser(HttpContextBase context, User user, string value)
         {
             if (value == null)
@@ -47,11 +56,10 @@ namespace PhoneStore.BL.Auth
 
             if (cookie != null)
             {
-                UserManager manager = new UserManager();
-
+                //UserManager manager = new UserManager();                
                 User user = manager.GetUserByCookies(cookie.Value);
 
-                return user != null;
+                return user != null && user.IsActive == true;                
             }
 
             return false;
@@ -59,7 +67,7 @@ namespace PhoneStore.BL.Auth
 
         private static void UpdateCookies(User user, string cookie)
         {
-            UserManager manager = new UserManager();
+            //UserManager manager = new UserManager();
             manager.UpdateCookies(user, cookie);
         }
     }

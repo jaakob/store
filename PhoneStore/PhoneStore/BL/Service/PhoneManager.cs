@@ -27,6 +27,22 @@ namespace PhoneStore.BL.Service
             phone.Images = GetImagesForPhone(phone);
             return phone;
         }
+
+        public List<Phone> GetPhones()
+        {
+            PhoneEntity phoneEntity = new PhoneEntity();
+            IEnumerable<PhoneEntity> entityPhones = phoneRepository.GetPhones();
+            if (entityPhones != null)
+            {
+                List<Phone> phones = new List<Phone>();
+                foreach (PhoneEntity p in entityPhones)
+                {
+                    phones.Add(p.ConvertToApplicationModel());
+                }
+                return phones;
+            }
+            return null;
+        }
         
         public int GetPhoneId(Phone phone)
         {
@@ -49,11 +65,6 @@ namespace PhoneStore.BL.Service
                 foreach (PhoneEntity phone in entityPhones)
                 {
                     var tempPhone = phone.ConvertToApplicationModel();
-                    var tempImg = GetImagesForPhone(tempPhone);
-                    if (tempImg != null)
-                    {
-                        tempPhone.Images = tempImg;
-                    }
                     phones.Add(tempPhone);
                 }
                 return phones;
@@ -77,11 +88,6 @@ namespace PhoneStore.BL.Service
 
         public List<string> GetImagesForPhone(Phone phone)
         {
-            /*
-            PhoneEntity phoneEntity = new PhoneEntity();
-            phoneEntity.PhoneId = 1;
-            ICollection<ImageEntity> s = phoneEntity.Images.Where(e => e.PhoneId == 1).ToList();
-            */
             if (phone != null)
             {
                 List<string> images = new List<string>();

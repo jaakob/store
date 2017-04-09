@@ -64,6 +64,18 @@
       <HintPath>..\packages\MimeKit.1.12.0\lib\net451\MimeKit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.4.3.564, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.4.3\lib\net45\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -124,6 +136,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="DAL\EF\PhoneStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PhoneStoreModel.edmx</DependentUpon>
@@ -175,14 +188,15 @@
     <Compile Include="BL\Repository\IPhoneRepository.cs" />
     <Compile Include="BL\Repository\IUserRepository.cs" />
     <Compile Include="BL\Service\EmailService.cs" />
+    <Compile Include="BL\Service\IPhoneManager.cs" />
     <Compile Include="BL\Service\IStorageModel.cs" />
+    <Compile Include="BL\Service\IUserManager.cs" />
     <Compile Include="BL\Service\PhoneManager.cs" />
     <Compile Include="BL\Service\UserManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="DAL\EF\ImageEntity.cs">
       <DependentUpon>PhoneStoreModel.tt</DependentUpon>
     </Compile>
@@ -210,6 +224,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IoC\Bootstrapper.cs" />
+    <Compile Include="IoC\ConfigurationHelper.cs" />
+    <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="Models\IApplicationModel.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Login.cs" />
@@ -229,10 +246,11 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\_BasicLayout.cshtml" />
-    <Content Include="Views\Register\Confirm.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
     <Content Include="Views\Home\PhonesSearch.cshtml" />
     <Content Include="Views\Ads\AddingPage.cshtml" />
     <Content Include="Views\Ads\AddingResult.cshtml" />
+    <Content Include="Views\Ads\AddingPhone.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
