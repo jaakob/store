@@ -13,7 +13,7 @@ namespace PhoneStore.DAL.EF
     using System.Collections.Generic;
     using PhoneStore.Models;
     using PhoneStore.BL.Service;
-    
+
     public partial class UserEntity : IStorageModel<User>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -35,40 +35,5 @@ namespace PhoneStore.DAL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneEntity> Phones { get; set; }
 
-        public User ConvertToApplicationModel()
-        {
-            User user = new User()
-            {
-                FirstName = this.FirstName,
-                LastName = this.LastName,
-                Password = this.Password,
-                Email = this.Email,
-                ContactPhone = this.ContactPhone,
-                IsActive = this.IsActive,
-                Cookie = this.Cookie,
-                RegDate = this.RegDate
-            };
-
-            return user;
-        }
-
-        public IStorageModel<User> FromApplicationModel(User model)
-        {
-            if (model == null)
-                return null;
-            UserEntity userEntity = new UserEntity()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Password = model.Password,
-                Email = model.Email,
-                ContactPhone = model.ContactPhone,
-                IsActive = model.IsActive,
-                Cookie = model.Cookie,
-                RegDate = model.RegDate
-            };
-
-            return userEntity;
-        }
     }
 }

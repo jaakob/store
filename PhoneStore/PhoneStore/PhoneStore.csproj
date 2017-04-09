@@ -56,6 +56,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="StructureMap, Version=4.4.3.564, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.4.3\lib\net45\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -112,6 +116,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="DAL\EF\PhoneStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PhoneStoreModel.edmx</DependentUpon>
@@ -122,6 +130,7 @@
       <DependentUpon>PhoneStoreModel.edmx</DependentUpon>
       <LastGenOutput>PhoneStoreModel.cs</LastGenOutput>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <EntityDeploy Include="DAL\EF\PhoneStoreModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -130,7 +139,17 @@
     <Content Include="DAL\EF\PhoneStoreModel.edmx.diagram">
       <DependentUpon>PhoneStoreModel.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -145,16 +164,32 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BL\Auth\AuthHelper.cs" />
+    <Compile Include="BL\Email\EmailHelper.cs" />
+    <Compile Include="BL\Repository\EF\EfImageRepository.cs" />
+    <Compile Include="BL\Repository\EF\EfPhoneRepository.cs" />
     <Compile Include="BL\Repository\EF\EfUserRepository.cs" />
+    <Compile Include="BL\Repository\IImageRepository.cs" />
+    <Compile Include="BL\Repository\IPhoneRepository.cs" />
     <Compile Include="BL\Repository\IUserRepository.cs" />
+    <Compile Include="BL\Service\Image\IImageManager.cs" />
+    <Compile Include="BL\Service\Image\ImageManager.cs" />
+    <Compile Include="BL\Service\Phone\IPhoneManager.cs" />
     <Compile Include="BL\Service\IStorageModel.cs" />
-    <Compile Include="BL\Service\UserManager.cs" />
+    <Compile Include="BL\Service\User\IUserManager.cs" />
+    <Compile Include="BL\Service\Phone\PhoneManager.cs" />
+    <Compile Include="BL\Service\User\UserManager.cs" />
+    <Compile Include="UI\HtmlHelpers\PagingHelpers.cs" />
+    <Compile Include="UI\PagingInfo.cs" />
+    <Compile Include="UI\ViewModels\PhoneListViewModel.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\EF\ImageEntity.cs">
       <DependentUpon>PhoneStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\EF\PartialModel\ImageEntity.cs" />
+    <Compile Include="DAL\EF\PartialModel\PhoneEntity.cs" />
+    <Compile Include="DAL\EF\PartialModel\UserEntity.cs" />
     <Compile Include="DAL\EF\PhoneEntity.cs">
       <DependentUpon>PhoneStoreModel.tt</DependentUpon>
     </Compile>
@@ -179,8 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IoC\Bootstrapper.cs" />
+    <Compile Include="IoC\ConfigurationHelper.cs" />
+    <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="Models\IApplicationModel.cs" />
+    <Compile Include="Models\ApplicationImage.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -196,6 +236,10 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\_BasicLayout.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Home\_PartialAds.cshtml" />
+    <Content Include="Views\Home\AdsAdditional.cshtml" />
+    <Content Include="Views\Home\AdResult.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -205,9 +249,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhoneStore.Security\PhoneStore.Security.csproj">
+      <Project>{ea40722b-b235-4a62-acb5-887abcd149a9}</Project>
+      <Name>PhoneStore.Security</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -7,12 +7,21 @@ using PhoneStore.BL.Service;
 using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using PhoneStore.BL.Repository.EF;
+using PhoneStore.BL.Repository;
 
 namespace PhoneStore.BL.Auth
 {
-    public static class AuthHelper
+    public class AuthHelper
     {
-        public static void LogInUser(HttpContextBase context, User user, string value)
+        private IUserManager manager;
+
+        public AuthHelper(IUserManager manager)
+        {
+            this.manager = manager;
+        }
+
+        public void UserSetCookie(HttpContextBase context, User user, string value)
         {
             if (value == null)
                 throw new Exception("Cookie is empty");
@@ -28,7 +37,7 @@ namespace PhoneStore.BL.Auth
         }
 
 
-        public static void LogOffUser(HttpContextBase context)
+        public void LogOffUser(HttpContextBase context)
         {
             if (context.Request.Cookies[Constants.NameCookie] != null)
             {
@@ -41,25 +50,21 @@ namespace PhoneStore.BL.Auth
             }                
         }
 
-        public static bool IsAuthenticated(HttpContextBase context)
+        public bool IsAuthenticated(HttpContextBase context)
         {
             HttpCookie cookie = context.Request.Cookies[Constants.NameCookie];
 
             if (cookie != null)
             {
-                UserManager manager = new UserManager();
-
                 User user = manager.GetUserByCookies(cookie.Value);
 
                 return user != null;
             }
-
             return false;
         }
 
-        private static void UpdateCookies(User user, string cookie)
+        private void UpdateCookies(User user, string cookie)
         {
-            UserManager manager = new UserManager();
             manager.UpdateCookies(user, cookie);
         }
     }

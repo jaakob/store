@@ -11,8 +11,10 @@ namespace PhoneStore.DAL.EF
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class PhoneEntity
+    using PhoneStore.Models;
+    using PhoneStore.BL.Service;
+
+    public partial class PhoneEntity : IStorageModel<Phone>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhoneEntity()
@@ -30,5 +32,7 @@ namespace PhoneStore.DAL.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageEntity> Images { get; set; }
         public virtual UserEntity Users { get; set; }
+
+     
     }
 }

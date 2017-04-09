@@ -1,0 +1,39 @@
+﻿@model PhoneStore.Models.Phone
+
+@{
+    ViewBag.Title = "AdAdditional";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AdsAdditional</title>
+</head>
+<body>
+    <div style="padding-left:5%" class="col-md-12">
+        @using (Html.BeginForm("AdsAdditional", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary()
+                <p>Модель:</p>                
+                @Html.TextBoxFor(x => Model.Model)
+
+                <p>Производитель:</p>
+                @Html.EditorFor(x => Model.Brand)
+
+                <p>Описание:</p>
+                @Html.TextAreaFor(x => Model.Description)
+
+                <p>Цена:</p>
+                @Html.EditorFor(x => Model.Price)
+
+                <p>Фото:</p>
+                <input type="file" name="image" />
+                <br />
+                <button type="submit" name="Add" class="btn-primary"> Сохранить </button>
+                }
+            </div>
+</body>
+</html>

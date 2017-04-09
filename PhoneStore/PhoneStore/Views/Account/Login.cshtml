@@ -1,27 +1,34 @@
-﻿@model PhoneStore.Models.Login
+﻿
+@model PhoneStore.Models.Login
 @{
-    Layout = null; 
+    ViewBag.Title = "Login";
+    Layout = "~/Views/_BasicLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
-</head>
-<body>
-    <div> 
+<div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
         @using (Html.BeginForm())
         {
-            @Html.ValidationSummary()
-            <p>E-mail: @Html.EditorFor(e => e.Email) </p>
-            <p>Пароль: @Html.PasswordFor(e => e.Password) </p>
-            <input type="submit" value="Войти" />
+            <strong>@Html.ValidationSummary()</strong>
+            <div class="form-group">
+                <div class="col-md-8">
+                    @Html.TextBoxFor(e => e.Email, new { @class = "form-control", @placeholder = "E-mail" })
+                </div>
+            </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-8" style="padding-top:10px">
+                        @Html.PasswordFor(e => e.Password, new { @class = "form-control", @placeholder = "Пароль" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-8" style="padding-top:10px">
+                        <button class="btn btn-success" type="submit">Войти</button>
+                    </div>
+                </div>
         }
-        <br />
-        <button onclick="location.href='@Url.Action("Registration", "Account")'">Регистрация</button>
     </div>
-</body>
-
-</html>
+    <div class="col-sm-4"></div>
+</div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Mail;
 
 
 namespace PhoneStore.Models
@@ -10,7 +11,7 @@ namespace PhoneStore.Models
     public class Login : IApplicationModel
     {
         [Required (ErrorMessage = "Email не заполнен")]
-        [StringLength(25, MinimumLength = 5, ErrorMessage = "Email не менее 5 и не более 25 символов")]
+        [StringLength(25, MinimumLength = 5, ErrorMessage = "Email не менее 5 и не более 256 символов")]
         public string Email { get; set; }
 
         [Required (ErrorMessage = "Пароль не заполнен")]

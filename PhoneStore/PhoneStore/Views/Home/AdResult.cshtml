@@ -1,0 +1,12 @@
+﻿
+@model PhoneStore.Models.Phone
+@{
+    ViewBag.Title = "AdResult";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+    
+    <h2 style="text-align:center">@Model.Model добавлен!</h2>
+    <img src="~/Images/smile.jpg" style="width:auto;height:250px;padding-left:40%" />
+    <br />
+    <p style="text-align:center">@Html.ActionLink("На главную", "Ads")</p>
+

@@ -25,8 +25,8 @@ namespace PhoneStore.DAL.EF
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<UserEntity> Users { get; set; }
         public virtual DbSet<ImageEntity> Images { get; set; }
         public virtual DbSet<PhoneEntity> Phones { get; set; }
-        public virtual DbSet<UserEntity> Users { get; set; }
     }
 }
