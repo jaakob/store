@@ -1,19 +1,11 @@
-﻿@model PhoneStore.Models.User
+﻿
+@model PhoneStore.Models.User
 @{
-    Layout = null;
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/_BasicLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ResultRegister</title>
-</head>
-<body>
-    <div> 
-        <p>Спасибо за регистрацию, @Model.FirstName! </p>
+    <div class="col-sm-12" style="text-align: center"> 
+        <p>Спасибо за регистрацию! Пройдите подтверждение регистрации по ссылке которая выслана вам на email.</p>
         <p>@Html.ActionLink("На главную", "Login", "Account")</p>
     </div>
-</body>
-</html>

@@ -1,0 +1,13 @@
+﻿
+@model PhoneStore.Models.User
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/_BasicLayout.cshtml";
+}
+
+
+    <div class="col-sm-12" style="text-align: center"> 
+      <p>Неверный токен. На почтовый адрес Вам высланы дальнейшие инструкции по завершению регистрации.</p>
+        @Html.ActionLink("На главную", "Login", "Account")
+    </div>
