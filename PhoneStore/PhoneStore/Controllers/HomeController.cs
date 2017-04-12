@@ -20,7 +20,7 @@ namespace PhoneStore.Controllers
         private IPhoneManager phoneManager;
         private IImageManager imageManager;
         private AuthHelper authHelper;
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 5;        
 
         public HomeController(IUserManager userManager, IPhoneManager phoneManager, IImageManager imageManager)
         {
@@ -32,7 +32,7 @@ namespace PhoneStore.Controllers
 
         [HttpGet]
         public ActionResult Ads(string filter = null, int page = 1)
-        {
+        { 
             if (authHelper.IsAuthenticated(HttpContext))
             {
                 if (filter == "")
@@ -55,9 +55,10 @@ namespace PhoneStore.Controllers
                     .OrderBy(e => e.PhoneId)
                     .Skip((page - 1) * PageSize)
                     .Take(PageSize);
+                
 
                 if (filter == null)
-                    return View(model);
+                    return View(model);                                                 
                 else
                     return PartialView("_PartialAds", model);
             }
@@ -125,5 +126,15 @@ namespace PhoneStore.Controllers
 
             return RedirectToAction("Login", "Account");
         }
+
+        public JsonResult AutoCompleteSearch(string term)
+        {            
+            var phones = phoneManager.GetAllPhones().Where(p => term == null || p.Model.ToLower().Contains(term.ToLower()))
+            .Select(p => new { value = p.Model })
+            .Distinct();            
+
+            return Json(phones, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

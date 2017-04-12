@@ -11,7 +11,7 @@ namespace PhoneStore.Models
     public class Login : IApplicationModel
     {
         [Required (ErrorMessage = "Email не заполнен")]
-        [StringLength(25, MinimumLength = 5, ErrorMessage = "Email не менее 5 и не более 256 символов")]
+        [StringLength(256, MinimumLength = 5, ErrorMessage = "Email не менее 5 и не более 256 символов")]
         public string Email { get; set; }
 
         [Required (ErrorMessage = "Пароль не заполнен")]

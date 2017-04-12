@@ -21,13 +21,13 @@
                 @Html.TextBoxFor(x => Model.Model)
 
                 <p>Производитель:</p>
-                @Html.EditorFor(x => Model.Brand)
+                @Html.TextBoxFor(x => Model.Brand)
 
                 <p>Описание:</p>
                 @Html.TextAreaFor(x => Model.Description)
 
                 <p>Цена:</p>
-                @Html.EditorFor(x => Model.Price)
+                @Html.TextBoxFor(x => Model.Price)
 
                 <p>Фото:</p>
                 <input type="file" name="image" />

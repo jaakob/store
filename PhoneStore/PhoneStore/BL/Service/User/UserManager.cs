@@ -21,7 +21,7 @@ namespace PhoneStore.BL.Service
         public void Add(User user)
         {
             if (user == null)
-                throw new NullReferenceException(nameof(user)); //ArgumentNull....
+                throw new ArgumentNullException(nameof(user)); //ArgumentNull....
 
             userRepository.Add(user);
 

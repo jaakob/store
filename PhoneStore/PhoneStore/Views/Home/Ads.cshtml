@@ -15,49 +15,63 @@
 
 <!DOCTYPE html>
 <html>
+<head>    
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>  
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>    
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>    
+    <script type="text/javascript">
+    $(function () {
+        $("[data-autocomplete-source]").each(function () {
+            var target = $(this);
+            target.autocomplete({ source: target.attr("data-autocomplete-source") });
+        });
+    });
+    </script>
+</head>
 <body>
     <div class="row panel">
-        <div id="categories" class="col-xs-3">
+        <div id="categories" class="col-xs-8">
             @using (Ajax.BeginForm("Ads", "Home", options))
             {
-                <div class="col-lg-6">
-                    <div class="input-group">
-                        <input type="text" name="filter" class="form-control" placeholder="Модель...">
+                <div class="col-xs-6">
+                    <div class="input-group">                        
+                        <input type="text" name="filter" class="form-control" placeholder="Модель..." data-autocomplete-source='@Url.Action("AutocompleteSearch", "Home")' />
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">Поиск</button>
                         </span>
-                    </div><!-- /input-group -->
+                    </div>
                 </div>
             }
         </div>
     </div>
-   
+
             <div id="result" class="col-xs-8">
                 @Html.Partial("_PartialAds", Model)
             </div>
-       
-        <div class="col-xs-3">
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary()
-            
-            <p> Модель:</p>
-            @Html.TextBoxFor(x => x.Phone.Model)
 
-            <p>Производитель:</p>
-            @Html.TextBoxFor(x => x.Phone.Brand)
+            <div class="col-xs-3">
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary()
 
-            <p>Описание:</p> 
-             @Html.TextAreaFor(x => x.Phone.Description)
-            
-            <p>Цена:</p> 
-            @Html.EditorFor(x => x.Phone.Price)
-            
-            <div style="padding-top:10px">
-            <button type="submit" name="Add" class="btn-primary"> Добавить </button>
-                </div>
-                
-         }
+                    <p> Модель:</p>
+                    @Html.TextBoxFor(x => x.Phone.Model)
+
+                    <p>Производитель:</p>
+                    @Html.TextBoxFor(x => x.Phone.Brand)
+
+                    <p>Описание:</p>
+                    @Html.TextAreaFor(x => x.Phone.Description)
+
+                    <p>Цена:</p>
+                    @Html.EditorFor(x => x.Phone.Price)
+
+                    <div style="padding-top:10px">
+                        <button type="submit" name="Add" class="btn-primary"> Добавить </button>
+                    </div>
+
+                }
             </div>
 </body>
 </html>
+

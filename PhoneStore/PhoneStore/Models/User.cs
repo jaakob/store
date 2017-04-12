@@ -13,7 +13,7 @@ namespace PhoneStore.Models
         [Required(ErrorMessage = "Имя обязательно для заполнения")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Фамилия обязательно для заполнения")]
+        [Required(ErrorMessage = "Фамилия обязательна для заполнения")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Пароль обязателен для заполнения")]
@@ -26,7 +26,7 @@ namespace PhoneStore.Models
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Почта обязательная для заполнения")]
-        [StringLength(25, MinimumLength = 5, ErrorMessage = "Электронный адрес не менее 5 и не более 256 символов")]
+        [StringLength(256, MinimumLength = 5, ErrorMessage = "Электронный адрес не менее 5 и не более 256 символов")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

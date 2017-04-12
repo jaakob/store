@@ -6,19 +6,19 @@
 @foreach (var i in Model.Phones)
 {
     <div class="well">
-        <div class="pull-left" style="margin-right:10px">           
-                 @if (i.Images.Value.Count != 0)
-                 {
-                   <img class="img-thumbnail" width="70" height="70"
-                   src="@i.Images.Value[0].Image" />
-                 }
+        <div class="pull-left" style="margin-right:10px;padding-top:15px">
+            @if (i.Images.Value.Count != 0)
+            {
+                <img class="img-thumbnail" width="70" height="70"
+                     src="@i.Images.Value[0].Image" />
+            }
 
         </div>
         <h3>
             <strong> @i.Model </strong>
             <span class="pull-right label label-primary">@i.Price.ToString("c")</span>
-        </h3>
-        <b><span class="lead">Производитель: @i.Brand</span></b>
+        </h3> 
+        <span class="lead">Производитель: @i.Brand</span>
         <br />
         <span class="lead">@i.Description</span>
     </div>
